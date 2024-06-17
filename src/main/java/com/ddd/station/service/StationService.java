@@ -1,8 +1,8 @@
 package com.ddd.station.service;
 
 import com.ddd.station.Station;
-import com.ddd.station.model.StationCreate;
-import com.ddd.station.model.StationUpdate;
+import com.ddd.station.model.request.StationCreate;
+import com.ddd.station.model.request.StationUpdate;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 

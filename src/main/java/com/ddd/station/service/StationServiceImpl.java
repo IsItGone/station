@@ -2,8 +2,9 @@ package com.ddd.station.service;
 
 import com.ddd.station.Station;
 import com.ddd.station.exception.StationNotFoundException;
-import com.ddd.station.model.StationCreate;
-import com.ddd.station.model.StationUpdate;
+import com.ddd.station.model.StationConverter;
+import com.ddd.station.model.request.StationCreate;
+import com.ddd.station.model.request.StationUpdate;
 import com.ddd.station.repository.StationRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +33,7 @@ public class StationServiceImpl implements StationService {
 
 	@Override
 	public Mono<String> createStation(StationCreate stationCreate) {
-		return stationRepository.insert(stationCreate.convert())
+		return stationRepository.insert(StationConverter.toEntity(stationCreate))
 				.flatMap(station -> Mono.just(station.getId()));
 	}
 
@@ -40,7 +41,9 @@ public class StationServiceImpl implements StationService {
 	public Mono<Void> updateStation(StationUpdate stationUpdate) {
 		return stationRepository.findById(stationUpdate.id())
 				.switchIfEmpty(Mono.error(StationNotFoundException::new))
-				.flatMap(station -> stationRepository.save(stationUpdate.convert())).then();
+				.flatMap(
+						station -> stationRepository.save(StationConverter.toEntity(stationUpdate)))
+				.then();
 	}
 
 	@Override

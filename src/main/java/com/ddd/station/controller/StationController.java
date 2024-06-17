@@ -1,8 +1,9 @@
 package com.ddd.station.controller;
 
-import com.ddd.station.model.StationCreate;
-import com.ddd.station.model.StationResponse;
-import com.ddd.station.model.StationUpdate;
+import com.ddd.station.model.StationConverter;
+import com.ddd.station.model.request.StationCreate;
+import com.ddd.station.model.request.StationUpdate;
+import com.ddd.station.model.response.StationResponse;
 import com.ddd.station.service.StationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,13 +35,13 @@ public class StationController {
 	@GetMapping("/station/{stationId}")
 	@ResponseStatus(HttpStatus.OK)
 	public Mono<StationResponse> getStation(@PathVariable String stationId) {
-		return stationService.getStationById(stationId).map(StationResponse::convert);
+		return stationService.getStationById(stationId).map(StationConverter::toResponse);
 	}
 
 	@GetMapping("/stations")
 	@ResponseStatus(HttpStatus.OK)
 	public Flux<StationResponse> getStations() {
-		return stationService.getStations().map(StationResponse::convert);
+		return stationService.getStations().map(StationConverter::toResponse);
 	}
 
 	@PostMapping("/station")
