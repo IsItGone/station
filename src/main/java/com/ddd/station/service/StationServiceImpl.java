@@ -16,35 +16,35 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class StationServiceImpl implements StationService {
 
-    private final StationRepository stationRepository;
+	private final StationRepository stationRepository;
 
 
-    @Override
-    public Mono<Station> getStationById(String id) {
-        return stationRepository.findById(id)
-                .switchIfEmpty(Mono.error(StationNotFoundException::new));
-    }
+	@Override
+	public Mono<Station> getStationById(String id) {
+		return stationRepository.findById(id)
+				.switchIfEmpty(Mono.error(StationNotFoundException::new));
+	}
 
-    @Override
-    public Flux<Station> getStations() {
-        return stationRepository.findAll();
-    }
+	@Override
+	public Flux<Station> getStations() {
+		return stationRepository.findAll();
+	}
 
-    @Override
-    public Mono<String> createStation(StationCreate stationCreate) {
-        return stationRepository.insert(stationCreate.convert())
-                .flatMap(station -> Mono.just(station.getId()));
-    }
+	@Override
+	public Mono<String> createStation(StationCreate stationCreate) {
+		return stationRepository.insert(stationCreate.convert())
+				.flatMap(station -> Mono.just(station.getId()));
+	}
 
-    @Override
-    public Mono<Void> updateStation(StationUpdate stationUpdate) {
-        return stationRepository.findById(stationUpdate.id())
-                .switchIfEmpty(Mono.error(StationNotFoundException::new))
-                .flatMap(station -> stationRepository.save(stationUpdate.convert())).then();
-    }
+	@Override
+	public Mono<Void> updateStation(StationUpdate stationUpdate) {
+		return stationRepository.findById(stationUpdate.id())
+				.switchIfEmpty(Mono.error(StationNotFoundException::new))
+				.flatMap(station -> stationRepository.save(stationUpdate.convert())).then();
+	}
 
-    @Override
-    public Mono<Void> deleteStationById(String id) {
-        return stationRepository.deleteById(id);
-    }
+	@Override
+	public Mono<Void> deleteStationById(String id) {
+		return stationRepository.deleteById(id);
+	}
 }

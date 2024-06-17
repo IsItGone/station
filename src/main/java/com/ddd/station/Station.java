@@ -10,10 +10,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Builder
 public class Station {
 
-    @Id
-    private String id;
-    private String name;
-    private String address;
-    private Double latitude;
-    private Double longitude;
+	@Id
+	private String id;
+	private String name;
+	private String address;
+	private Double latitude;
+	private Double longitude;
 }

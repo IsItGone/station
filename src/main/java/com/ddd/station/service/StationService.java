@@ -8,13 +8,13 @@ import reactor.core.publisher.Mono;
 
 public interface StationService {
 
-    Mono<Station> getStationById(String id);
+	Mono<Station> getStationById(String id);
 
-    Flux<Station> getStations();
+	Flux<Station> getStations();
 
-    Mono<String> createStation(StationCreate stationCreate);
+	Mono<String> createStation(StationCreate stationCreate);
 
-    Mono<Void> updateStation(StationUpdate stationUpdate);
+	Mono<Void> updateStation(StationUpdate stationUpdate);
 
-    Mono<Void> deleteStationById(String id);
+	Mono<Void> deleteStationById(String id);
 }
