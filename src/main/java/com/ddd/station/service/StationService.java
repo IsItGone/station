@@ -1,16 +1,16 @@
 package com.ddd.station.service;
 
-import com.ddd.station.Station;
 import com.ddd.station.model.request.StationCreate;
 import com.ddd.station.model.request.StationUpdate;
+import com.ddd.station.model.response.StationResponse;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface StationService {
 
-	Mono<Station> getStationById(String id);
+	Mono<StationResponse> getStationById(String id);
 
-	Flux<Station> getStations();
+	Flux<StationResponse> getStations();
 
 	Mono<String> createStation(StationCreate stationCreate);
 

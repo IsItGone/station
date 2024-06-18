@@ -1,6 +1,5 @@
 package com.ddd.station.controller;
 
-import com.ddd.station.model.StationConverter;
 import com.ddd.station.model.request.StationCreate;
 import com.ddd.station.model.request.StationUpdate;
 import com.ddd.station.model.response.StationResponse;
@@ -35,13 +34,13 @@ public class StationController {
 	@GetMapping("/station/{stationId}")
 	@ResponseStatus(HttpStatus.OK)
 	public Mono<StationResponse> getStation(@PathVariable String stationId) {
-		return stationService.getStationById(stationId).map(StationConverter::toResponse);
+		return stationService.getStationById(stationId);
 	}
 
 	@GetMapping("/stations")
 	@ResponseStatus(HttpStatus.OK)
 	public Flux<StationResponse> getStations() {
-		return stationService.getStations().map(StationConverter::toResponse);
+		return stationService.getStations();
 	}
 
 	@PostMapping("/station")
