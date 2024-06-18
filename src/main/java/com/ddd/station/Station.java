@@ -16,4 +16,5 @@ public class Station {
 	private String address;
 	private Double latitude;
 	private Double longitude;
+	private Boolean isBoarding;
 }
