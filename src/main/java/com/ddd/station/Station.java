@@ -1,5 +1,6 @@
 package com.ddd.station;
 
+import java.time.LocalTime;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
@@ -16,5 +17,6 @@ public class Station {
 	private String address;
 	private Double latitude;
 	private Double longitude;
-	private Boolean isBoarding;
+	private LocalTime stopTime;
+	private Boolean isDeparture;
 }
