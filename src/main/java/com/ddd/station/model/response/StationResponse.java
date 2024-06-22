@@ -1,12 +1,11 @@
 package com.ddd.station.model.response;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import java.time.LocalTime;
+import java.util.List;
 import lombok.Builder;
 
 @Builder
-public record StationResponse(String id, String name, String address, Double latitude,
-							  Double longitude, @JsonFormat(pattern = "HH:mm") LocalTime stopTime,
-							  Boolean isDeparture) {
+public record StationResponse(String id, String name, String description, String address,
+							  Double latitude, Double longitude, String stopTime,
+							  Boolean isDeparture, List<String> routes) {
 
 }
