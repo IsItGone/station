@@ -1,5 +1,6 @@
 package com.ddd.station.controller;
 
+import com.ddd.station.exception.StationNotFoundException;
 import com.ddd.station.model.request.StationCreate;
 import com.ddd.station.model.request.StationUpdate;
 import com.ddd.station.model.response.StationResponse;
@@ -30,6 +31,13 @@ public class StationController {
 	public Mono<String> healthCheck() {
 		return Mono.just("OK");
 	}
+
+	@GetMapping("/error")
+	@ResponseStatus(HttpStatus.OK)
+	public Mono<String> errorCheck() {
+		return Mono.error(StationNotFoundException::new);
+	}
+	
 
 	@GetMapping("/station/{stationId}")
 	@ResponseStatus(HttpStatus.OK)
