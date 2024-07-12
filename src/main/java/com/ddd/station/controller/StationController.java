@@ -37,9 +37,9 @@ public class StationController {
 	public Mono<String> errorCheck() {
 		return Mono.error(StationNotFoundException::new);
 	}
-	
 
-	@GetMapping("/station/{stationId}")
+
+	@GetMapping("/stations/{stationId}")
 	@ResponseStatus(HttpStatus.OK)
 	public Mono<StationResponse> getStation(@PathVariable String stationId) {
 		return stationService.getStationById(stationId);
@@ -51,19 +51,19 @@ public class StationController {
 		return stationService.getStations();
 	}
 
-	@PostMapping("/station")
+	@PostMapping("/stations")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Mono<Void> createStation(@RequestBody StationCreate stationCreate) {
 		return stationService.createStation(stationCreate).then();
 	}
 
-	@PutMapping("/station")
+	@PutMapping("/stations")
 	@ResponseStatus(HttpStatus.OK)
 	public Mono<Void> updateStation(@RequestBody StationUpdate stationUpdate) {
 		return stationService.updateStation(stationUpdate).then();
 	}
 
-	@DeleteMapping("/station/{stationId}")
+	@DeleteMapping("/stations/{stationId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public Mono<Void> deleteStation(@PathVariable String stationId) {
 		return stationService.deleteStationById(stationId).then();
