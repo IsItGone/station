@@ -1,9 +1,10 @@
 package com.ddd.station.model;
 
-import com.ddd.station.Station;
 import com.ddd.station.model.request.StationCreate;
 import com.ddd.station.model.request.StationUpdate;
 import com.ddd.station.model.response.StationResponse;
+import com.ddd.station.repository.document.StationDocument;
+import com.ddd.station.service.Station;
 import org.bson.types.ObjectId;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
@@ -12,11 +13,15 @@ import org.mapstruct.MappingConstants.ComponentModel;
 @Mapper(componentModel = ComponentModel.SPRING, injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface StationMapper {
 
-	Station toEntity(StationCreate stationCreate);
+	Station toStation(StationDocument stationDocument);
 
-	Station toEntity(StationUpdate stationUpdate);
+	Station toStation(StationCreate stationDocument);
 
-	StationResponse toResponse(Station station);
+	Station toStation(StationUpdate stationDocument);
+
+	StationDocument toStationDocument(Station station);
+
+	StationResponse toStationResponse(Station station);
 
 	default ObjectId stringToObjectId(String id) {
 		return new ObjectId(id);

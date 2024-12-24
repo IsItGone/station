@@ -1,4 +1,4 @@
-package com.ddd.station;
+package com.ddd.station.repository.document;
 
 import java.util.List;
 import lombok.Builder;
@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "stations")
 @Getter
 @Builder
-public class Station {
+public class StationDocument {
 
 	@Id
 	private String id;
