@@ -1,9 +1,16 @@
 package com.ddd.station.repository;
 
-import com.ddd.station.Station;
-import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
+import com.ddd.station.service.Station;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
-public interface StationRepository extends ReactiveMongoRepository<Station, String>,
-		StationTemplate {
+public interface StationRepository {
 
+	Mono<Station> findById(String id);
+
+	Flux<Station> findAll();
+
+	Mono<Station> save(Station station);
+
+	Mono<Void> deleteById(String id);
 }

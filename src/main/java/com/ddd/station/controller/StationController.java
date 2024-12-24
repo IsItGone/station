@@ -1,6 +1,7 @@
 package com.ddd.station.controller;
 
 import com.ddd.station.exception.StationNotFoundException;
+import com.ddd.station.model.StationMapper;
 import com.ddd.station.model.request.StationCreate;
 import com.ddd.station.model.request.StationUpdate;
 import com.ddd.station.model.response.StationResponse;
@@ -25,6 +26,7 @@ import reactor.core.publisher.Mono;
 public class StationController {
 
 	private final StationService stationService;
+	private final StationMapper stationMapper;
 
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
@@ -38,29 +40,28 @@ public class StationController {
 		return Mono.error(StationNotFoundException::new);
 	}
 
-
 	@GetMapping("/stations/{stationId}")
 	@ResponseStatus(HttpStatus.OK)
 	public Mono<StationResponse> getStation(@PathVariable String stationId) {
-		return stationService.getStationById(stationId);
+		return stationService.getStationById(stationId).map(stationMapper::toStationResponse);
 	}
 
 	@GetMapping("/stations")
 	@ResponseStatus(HttpStatus.OK)
 	public Flux<StationResponse> getStations() {
-		return stationService.getStations();
+		return stationService.getStations().map(stationMapper::toStationResponse);
 	}
 
 	@PostMapping("/stations")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Mono<Void> createStation(@RequestBody StationCreate stationCreate) {
-		return stationService.createStation(stationCreate).then();
+		return stationService.upsertStation(stationMapper.toStation(stationCreate)).then();
 	}
 
 	@PutMapping("/stations")
 	@ResponseStatus(HttpStatus.OK)
 	public Mono<Void> updateStation(@RequestBody StationUpdate stationUpdate) {
-		return stationService.updateStation(stationUpdate).then();
+		return stationService.upsertStation(stationMapper.toStation(stationUpdate)).then();
 	}
 
 	@DeleteMapping("/stations/{stationId}")

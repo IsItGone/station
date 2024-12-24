@@ -1,10 +1,5 @@
 package com.ddd.station.service;
 
-import com.ddd.station.exception.StationNotFoundException;
-import com.ddd.station.model.StationMapper;
-import com.ddd.station.model.request.StationCreate;
-import com.ddd.station.model.request.StationUpdate;
-import com.ddd.station.model.response.StationResponse;
 import com.ddd.station.repository.StationRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,32 +13,20 @@ import reactor.core.publisher.Mono;
 public class StationServiceImpl implements StationService {
 
 	private final StationRepository stationRepository;
-	private final StationMapper stationMapper;
 
 	@Override
-	public Mono<StationResponse> getStationById(String id) {
-		return stationRepository.findById(id)
-				.switchIfEmpty(Mono.error(StationNotFoundException::new))
-				.map(stationMapper::toResponse);
+	public Mono<Station> getStationById(String id) {
+		return stationRepository.findById(id);
 	}
 
 	@Override
-	public Flux<StationResponse> getStations() {
-		return stationRepository.findAll().map(stationMapper::toResponse);
+	public Flux<Station> getStations() {
+		return stationRepository.findAll();
 	}
 
 	@Override
-	public Mono<String> createStation(StationCreate stationCreate) {
-		return stationRepository.insert(stationMapper.toEntity(stationCreate))
-				.flatMap(station -> Mono.just(station.getId()));
-	}
-
-	@Override
-	public Mono<Void> updateStation(StationUpdate stationUpdate) {
-		return stationRepository.findById(stationUpdate.id())
-				.switchIfEmpty(Mono.error(StationNotFoundException::new)).flatMap(
-						station -> stationRepository.save(stationMapper.toEntity(stationUpdate))
-								.then());
+	public Mono<Void> upsertStation(Station station) {
+		return stationRepository.save(station).then();
 	}
 
 	@Override
